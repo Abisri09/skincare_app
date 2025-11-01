@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#667eea">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlNraW5jYXJlIFJvdXRpbmUiLAogICJzaG9ydF9uYW1lIjogIlNraW5jYXJlIiwKICAic3RhcnRfdXJsIjogIi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiM2NjdlZWEiLAogICJ0aGVtZV9jb2xvciI6ICIjNjY3ZWVhIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxOTInIGhlaWdodD0nMTkyJyUzRSUzQ3RleHQgeT0nNTAlMjUnIGZvbnQtc2l6ZT0nMTIwJyUzRfCfjowlM0MvdGV4dCUzRSUzQy9zdmclM0UiLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9CiAgXQp9">
+    <title>7-Day Skincare Routine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .notification-setup {
+            background: #fff3cd;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .notification-setup h3 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+        }
+        
+        .content {
+            padding: 25px;
+        }
+        
+        .day-selector {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+        
+        .day-btn {
+            background: #f0f0f0;
+            border: 2px solid #e0e0e0;
+            padding: 12px 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .day-btn:hover {
+            background: #e8e8e8;
+            transform: translateY(-2px);
+        }
+        
+        .day-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+        
+        .routine-section {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .routine-section h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .routine-section.morning h2 {
+            color: #f5576c;
+        }
+        
+        .routine-section.night h2 {
+            color: #667eea;
+        }
+        
+        .step {
+            background: white;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .step-text {
+            font-size: 15px;
+            color: #333;
+        }
+        
+        .current-day {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #d63031;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .alarm-status {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 480px) {
+            .day-selector {
+                gap: 5px;
+            }
+            
+            .day-btn {
+                padding: 10px 3px;
+                font-size: 12px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌟 7-Day Skincare Routine 🌟</h1>
+            <p>Your personalized beauty journey</p>
+        </div>
+        
+        <div class="notification-setup">
+            <h3>⏰ Setup Daily Reminders</h3>
+            <p style="color: #856404; font-size: 14px; margin-bottom: 10px;">
+                Get notified at 9:30 AM & 9:30 PM daily!
+            </p>
+            <button class="btn" onclick="requestNotificationPermission()">🔔 Enable Notifications</button>
+            <button class="btn btn-success" onclick="setupAlarms()">⏰ Set Alarms (9:30 AM & PM)</button>
+            <div id="alarmStatus"></div>
+        </div>
+        
+        <div class="content">
+            <div class="current-day" id="currentDay"></div>
+            
+            <div class="day-selector">
+                <button class="day-btn" onclick="showDay(1)">Day 1</button>
+                <button class="day-btn" onclick="showDay(2)">Day 2</button>
+                <button class="day-btn" onclick="showDay(3)">Day 3</button>
+                <button class="day-btn" onclick="showDay(4)">Day 4</button>
+                <button class="day-btn" onclick="showDay(5)">Day 5</button>
+                <button class="day-btn" onclick="showDay(6)">Day 6</button>
+                <button class="day-btn" onclick="showDay(7)">Day 7</button>
+            </div>
+            
+            <div id="routineDisplay"></div>
+        </div>
+        
+        <div class="footer">
+            💚 Stay consistent! Your skin will thank you! 💚
+        </div>
+    </div>
+
+    <script>
+        const skincareRoutine = {
+            1: {
+                morning: ["Wash face", "Rosewater as toner/cleanser", "Moisturizer"],
+                night: ["Lukewarm water", "Rosewater", "Moisturizer"]
+            },
+            2: {
+                morning: ["Wash face", "Rosewater as toner/cleanser", "Moisturizer"],
+                night: ["Wash face", "Rosewater", "Night wine gel", "Moisturizer"]
+            },
+            3: {
+                morning: ["Wash face", "Rosewater as toner/cleanser", "Moisturizer"],
+                night: ["Lukewarm water", "Rosewater", "Moisturizer"]
+            },
+            4: {
+                morning: ["Wash face", "Rosewater as toner/cleanser", "Moisturizer"],
+                night: ["Lukewarm water", "Rosewater", "Moisturizer"]
+            },
+            5: {
+                morning: ["Wash face", "Rosewater as toner/cleanser", "Moisturizer"],
+                night: ["Wash face", "Rosewater", "Night wine gel", "Moisturizer"]
+            },
+            6: {
+                morning: ["Wash face", "Rosewater as toner/cleanser", "Moisturizer"],
+                night: ["Lukewarm water", "Rosewater", "Moisturizer"]
+            },
+            7: {
+                morning: ["Wash face", "Rosewater as toner/cleanser", "Moisturizer"],
+                night: ["Lukewarm water", "Rosewater", "Moisturizer"]
+            }
+        };
+
+        function showDay(day) {
+            document.querySelectorAll('.day-btn').forEach((btn, index) => {
+                btn.classList.toggle('active', index + 1 === day);
+            });
+
+            const routine = skincareRoutine[day];
+            const display = document.getElementById('routineDisplay');
+            
+            let html = '<div class="routine-section morning">';
+            html += '<h2>☀️ Morning Routine (9:30 AM)</h2>';
+            routine.morning.forEach((step, index) => {
+                html += `
+                    <div class="step">
+                        <div class="step-number">${index + 1}</div>
+                        <div class="step-text">${step}</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            html += '<div class="routine-section night">';
+            html += '<h2>🌙 Night Routine (9:30 PM)</h2>';
+            routine.night.forEach((step, index) => {
+                html += `
+                    <div class="step">
+                        <div class="step-number">${index + 1}</div>
+                        <div class="step-text">${step}</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            display.innerHTML = html;
+        }
+
+        function requestNotificationPermission() {
+            if ('Notification' in window) {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        new Notification('🌟 Skincare Routine', {
+                            body: 'Notifications enabled! You\'ll receive reminders at 9:30 AM & PM',
+                            icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192"><text y="50%" font-size="120">💆</text></svg>'
+                        });
+                        alert('✅ Notifications enabled! Now click "Set Alarms" button.');
+                    } else {
+                        alert('❌ Please allow notifications to receive reminders!');
+                    }
+                });
+            } else {
+                alert('❌ Your browser doesn\'t support notifications');
+            }
+        }
+
+        function setupAlarms() {
+            const statusDiv = document.getElementById('alarmStatus');
+            
+            // Check if notifications are enabled
+            if ('Notification' in window && Notification.permission === 'granted') {
+                // Schedule daily notifications
+                scheduleDailyNotifications();
+                statusDiv.innerHTML = '<div class="alarm-status">✅ Alarms set for 9:30 AM & 9:30 PM daily!</div>';
+                
+                // Save to localStorage
+                localStorage.setItem('alarmsEnabled', 'true');
+            } else {
+                alert('⚠️ Please enable notifications first!');
+            }
+        }
+
+        function scheduleDailyNotifications() {
+            // Clear any existing timers
+            if (window.morningTimer) clearInterval(window.morningTimer);
+            if (window.nightTimer) clearInterval(window.nightTimer);
+            
+            // Check every minute if it's time to notify
+            window.morningTimer = setInterval(() => {
+                const now = new Date();
+                if (now.getHours() === 9 && now.getMinutes() === 30) {
+                    sendNotification('morning');
+                }
+            }, 60000);
+            
+            window.nightTimer = setInterval(() => {
+                const now = new Date();
+                if (now.getHours() === 21 && now.getMinutes() === 30) {
+                    sendNotification('night');
+                }
+            }, 60000);
+        }
+
+        function sendNotification(time) {
+            const today = new Date().getDay();
+            const routineDay = today === 0 ? 7 : today;
+            const routine = skincareRoutine[routineDay];
+            
+            const steps = time === 'morning' ? routine.morning : routine.night;
+            const emoji = time === 'morning' ? '☀️' : '🌙';
+            const timeText = time === 'morning' ? 'Morning' : 'Night';
+            
+            new Notification(`${emoji} ${timeText} Skincare Routine`, {
+                body: `Time for Day ${routineDay} routine!\n${steps.join(' → ')}`,
+                icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192"><text y="50%" font-size="120">💆</text></svg>',
+                requireInteraction: true
+            });
+        }
+
+        // Show today's routine by default
+        window.onload = function() {
+            const today = new Date().getDay();
+            let routineDay = today === 0 ? 7 : today;
+            
+            document.getElementById('currentDay').textContent = 
+                `📅 Today is Day ${routineDay} of your routine!`;
+            
+            showDay(routineDay);
+            
+            // Restore alarms if previously enabled
+            if (localStorage.getItem('alarmsEnabled') === 'true') {
+                scheduleDailyNotifications();
+                document.getElementById('alarmStatus').innerHTML = 
+                    '<div class="alarm-status">✅ Alarms active for 9:30 AM & 9:30 PM!</div>';
+            }
+        };
+    </script>
+</body>
+</html>
